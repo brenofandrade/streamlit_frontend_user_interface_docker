@@ -1,0 +1,24 @@
+
+version: "3.9"
+
+services:
+  streamlit:
+    build: .
+    container_name: chat_rag_client_streamlit
+    command: streamlit run src/app.py --server.port 8505 --server.headless true
+    volumes:
+      - .:/app
+      - ./docs:/app/docs
+      # - /home/unimed/BNU_IA/Projetos/0_Config/.env:/app/.env
+    env_file:
+      - .env
+    environment:
+      - AWS_ACCESS_KEY_ID:'YOUR-ACCESS-KEY-ID'
+      - AWS_SECRET_ACCESS_KEY:'YOUR-SECRET-ACCESS-KEY'
+      - BUCKET_NAME:'YOUR-BUCKET-NAME'
+      - POD_ID:'YOUR-POD_ID'
+    ports:
+      - "8505:8505"
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
